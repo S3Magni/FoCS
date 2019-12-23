@@ -14,7 +14,7 @@ n = 0
 class Main :
     def reader(self, fname, nrows, com='read_csv', sep=','):
         self.fname = fname
-        self.nrows=nrows
+        self.nrows = nrows
         x = {}
         if nrows>0:
             exe = "import pandas ; f = pandas." + com + "('" + fname + "'," + "sep='" + sep + "', nrows=" + str(nrows) + ")"
@@ -36,35 +36,28 @@ loans_ = Mn.reader(fname=fname_l, nrows=n); del fname_l
 print(list(loans_.columns))
 print(loans_.head())
 
-import datetime
+dur=loans_.iloc[:, [0,19,20]]
 
-#dur=loans_.iloc[:, [0,19,20]]
-#Mn.dater(file=dur, ncol=1)
-#Mn.dater(file=dur, ncol=2)
-
-#for el in tqdm.tqdm(range(0,len(dur.iloc[:, 0]))):
-#    if type(dur.iloc[el, 1])== str:
-#        l = dur.iloc[el, 1].split(" ")[0]
-#        dur.iloc[el, 1] = datetime.datetime.strptime(l, '%Y-%m-%d').date()
-#    if type(dur.iloc[el, 2])== str:
-#        r = dur.iloc[el, 2].split(" ")[0]
-#        dur.iloc[el, 2] = datetime.datetime.strptime(r, '%Y-%m-%d').date()
-#    print(el)
-#del el; del l; del r
+for el in tqdm.tqdm(range(0,len(dur.iloc[:, 0]))):
+    if type(dur.iloc[el, 1])== str:
+        l = dur.iloc[el, 1].split(" ")[0]
+        dur.iloc[el, 1] = datetime.datetime.strptime(l, '%Y-%m-%d').date()
+    if type(dur.iloc[el, 2])== str:
+        r = dur.iloc[el, 2].split(" ")[0]
+        dur.iloc[el, 2] = datetime.datetime.strptime(r, '%Y-%m-%d').date()
+del el; del l; del r
 
 #fname_dur = path + "dur.csv"
 #dur=Mn.reader(fname=fname_dur, nrows=0)
 #dur["planned_expiration_time"] = pandas.to_datetime(dur["planned_expiration_time"])
 #dur["disburse_time"] = pandas.to_datetime(dur["disburse_time"])
-#dur.insert(3, "loans_duration", dur.iloc[:, 1]-dur.iloc[:, 2], True)
-#for el in tqdm.tqdm(range(0,len(dur.iloc[:, 0]))):
-#    if dur.iloc[el, 3]!= int:
-#        dur.iloc[el, 3] = dur.iloc[el,3].days
-#del el
 
-#dur.to_csv(path_or_buf="C:/Users/Lenovo/Desktop/Nuova cartella/dur.csv", index=False, date_format='%Y-%m-%d')
-
-#loans_lender_ND = pandas.merge(loans_lender_N, dur.iloc[:, [0, 3]], on="loan_id", right_index=True)
+dur.insert(3, "loans_duration", dur.iloc[:, 1]-dur.iloc[:, 2], True)
+for el in tqdm.tqdm(range(0,len(dur.iloc[:, 0]))):
+    if dur.iloc[el, 3]!= int:
+        dur.iloc[el, 3] = dur.iloc[el,3].days
+del el
+loans_lender_ND = pandas.merge(loans_lender_N, dur.iloc[:, [0, 3]], on="loan_id", right_index=True)
 
 ### PUNTO 3
 count_lenders = loans_lender_N["lenders"].value_counts()
