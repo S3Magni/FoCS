@@ -5,6 +5,7 @@
 import pandas
 import tqdm
 import time
+import datetime
 
 path = "C:/Users/Lenovo/Desktop/Nuova cartella/"
 n = 1000
@@ -27,26 +28,7 @@ Mn=Main()
 
 
 ### POUNTO 1
-fname_ll = path + "loans_lenders.csv"
-loans_lender = Mn.reader(fname=fname_ll, nrows=n); del fname_ll
-print(list(loans_lender.columns))
 
-m=max(n, len(loans_lender))
-lenders = loans_lender.iloc[0:m, 1]
-col1_N = []
-count_lenders_number = []
-for el in tqdm.tqdm(lenders):
-    l = el.split(",")
-    col1_N.append(l[0])
-    count_lenders_number.append(len(l))
-del el; del l; del lenders
-loans_lender_Nl = {list(loans_lender.columns)[0]: loans_lender.iloc[0:m, 0], list(loans_lender.columns)[1]: col1_N}
-del col1_N
-loans_lender_N = pandas.DataFrame(data=loans_lender_Nl)
-del loans_lender_Nl
-print(loans_lender_N.head())
-count_lenders_number_ID = {list(loans_lender.columns)[0]: loans_lender.iloc[0:m, 0], "number_of_lenders": count_lenders_number}
-count_lenders_number_ID = pandas.DataFrame(data=count_lenders_number_ID)
 
 ### PUNTO 2
 fname_l = path + "loans.csv"
