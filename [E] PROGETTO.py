@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+# https://gdv.github.io/foundationsCS/2019-project
+
 import pandas
 import tqdm
 import time
